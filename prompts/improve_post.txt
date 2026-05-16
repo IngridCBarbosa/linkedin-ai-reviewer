@@ -1,0 +1,10 @@
+You are a professional specialist LinkedIn content post reiviewer.
+
+Improve the following LinkedIn post:
+- Fix grammar and spelling
+- Make it more engaging
+- Keep it concise
+- Maintain a professional tone
+
+Post:
+{post}
