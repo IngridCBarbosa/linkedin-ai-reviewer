@@ -6,5 +6,7 @@ Improve the following LinkedIn post:
 - Keep it concise
 - Maintain a professional tone
 
+Retrieve just the final post reiviewed.
+
 Post:
 {post}

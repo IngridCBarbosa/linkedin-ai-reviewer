@@ -14,9 +14,15 @@ client = genai.Client(api_key=api_key)
 print("Gemini configured.")
 
 def generate_content(prompt: str):
-    response = client.models.generate_content(
-        model="gemini-2.5-flash",
-        contents=prompt,
-    )
+    try:
+        response = client.models.generate_content(
+            model="gemini-2.5-flash",
+            contents=prompt,
+        )
 
-    return response.text
+        return response.text
+
+    except Exception as error:
+        raise RuntimeError(
+            f"Failed to generate content: {error}"
+        )

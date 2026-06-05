@@ -2,27 +2,23 @@ import typer
 from rich import print
 from services import gemini_service
 
+from core.reviewer import review_post
+
 app = typer.Typer()
 
-# Reade a file from prompt
-def load_prompt():
-    with open("prompts/improve_post.txt") as file:
-        return file.read()
 
 @app.command()
 def review():
     post = typer.prompt("[green] Paste your text to post here: ")
 
-    prompt_template = load_prompt()
-    final_prompt = prompt_template.format(post=post)
+    try:
+        response = review_post(post)
+    except Exception as error:
+        print(error)
 
-    print("\n[green]Prompt loaded:[/green]")
-    print(final_prompt)
+    print("\n[green] Improved LinkedIn Post:[/green]\n")
 
-    result = gemini_service.generate_content(final_prompt)
-
-    print("[green] Result:")
-    print(result)
+    print(response)
 
 if __name__ == "__main__":
     app()
