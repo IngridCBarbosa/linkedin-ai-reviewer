@@ -1,24 +1,31 @@
-import typer
-from rich import print
-from services import gemini_service
+from fastapi import FastAPI, Depends
 
-from core.reviewer import review_post
+from api.dependencies.auth import get_current_user
 
-app = typer.Typer()
+app = FastAPI(
+    title="LinkedIn AI Reviewer",
+    version="1.0.0"
+)
 
 
-@app.command()
-def review():
-    post = typer.prompt("[green] Paste your text to post here: ")
+@app.get("/")
+def root():
+    return {
+        "message": "LinkedIn AI Reviewer API"
+    }
 
-    try:
-        response = review_post(post)
-    except Exception as error:
-        print(error)
 
-    print("\n[green] Improved LinkedIn Post:[/green]\n")
+@app.get("/health")
+def health():
+    return {
+        "status": "ok"
+    }
 
-    print(response)
-
-if __name__ == "__main__":
-    app()
+@app.get("/protected")
+def protected_route(
+    user=Depends(get_current_user)
+):
+    return {
+        "message": "Access granted",
+        "user": user
+    }
